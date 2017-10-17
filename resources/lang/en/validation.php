@@ -86,6 +86,9 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
+    // Custom rules
+    'not_in_blocked_emails_list'    => 'Your e-mail address is blocked.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

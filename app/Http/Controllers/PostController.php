@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 
+/**
+ * Class PostController
+ *
+ * @package App\Http\Controllers
+ */
 class PostController extends Controller
 {
     /**
@@ -33,18 +38,21 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'title' => 'required|max:255|unique:posts,title',
             'text' => 'required',
         ]);
+
         $post = new Post;
         $post->title = $request->title;
         $post->text = $request->text;
         $post->save();
+
         return redirect()->action('PostController@show', $post);
     }
 
@@ -52,11 +60,13 @@ class PostController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $post = Post::findOrFail($id);
+
         return view('post.show', compact('post'));
     }
 
@@ -64,11 +74,13 @@ class PostController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $post = Post::findOrFail($id);
+
         return view('post.edit', compact('post'));
     }
 
@@ -77,14 +89,22 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
+
+        $this->validate($request, [
+            'title' => 'required|max:255|unique:posts,title,'.$post->title.',title',
+            'text' => 'required',
+        ]);
+
         $post->title = $request->title;
         $post->text = $request->text;
         $post->save();
+
         return redirect()->action('PostController@show', $post);
     }
 
@@ -96,6 +116,21 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    /**
+     * Remove post
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->action('PostController@index');
     }
 }

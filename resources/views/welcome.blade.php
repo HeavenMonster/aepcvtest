@@ -1,1 +1,7 @@
-<h4><a href="{{ action('PostController@index') }}">Ieraksti</a></h4>
+@extends("layouts.master")
+
+@section("content")
+
+    <h4>TODO: Here will be dashboard</h4>
+
+@endsection

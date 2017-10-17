@@ -5,7 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Comment;
+use App\BlockedEmail;
+use Illuminate\Validation\ValidationException;
 
+/**
+ * Class CommentController
+ *
+ * @package App\Http\Controllers
+ */
 class CommentController extends Controller
 {
     /**
@@ -32,11 +39,17 @@ class CommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $postId)
     {
         $post = Post::findOrFail($postId);
+
+        $this->validate($request, [
+            'email'     => 'required|email|not_in_blocked_emails_list',
+            'comment'   => 'required'
+        ]);
 
         $comment = new Comment;
         $comment->email = $request->email;
@@ -50,6 +63,7 @@ class CommentController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,6 +75,7 @@ class CommentController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -73,6 +88,7 @@ class CommentController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -84,10 +100,36 @@ class CommentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Delete all user comments and add his email to blacklist
+     *
+     * @param $postId
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function block($postId, Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
+
+        Comment::where('email', $request->email)->delete();
+
+        $blockedEmail = new BlockedEmail();
+        $blockedEmail->email = $request->email;
+        $blockedEmail->save();
+
+        $post = Post::findOrFail($postId);
+
+        return redirect()->action('PostController@show', $post);
     }
 }

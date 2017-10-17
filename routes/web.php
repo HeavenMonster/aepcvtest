@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', ['as' => 'home', 'uses' => function () {
     return view('welcome');
-});
+}]);
 
 Route::resource('post', 'PostController');
+Route::post('post/{id}', 'PostController@delete');
 Route::resource('post.comment', 'CommentController');
+Route::post('post/{id}/comment/block', 'CommentController@block');
