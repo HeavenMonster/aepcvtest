@@ -2,9 +2,11 @@
 
 @section("content")
 
-    <p>
-        <a class="btn btn-primary" href="{{ action('PostController@create') }}">Pievienot jaunu ierakstu</a>
-    </p>
+    <ol class="breadcrumb">
+        <li class="active">Ieraksti</li>
+    </ol>
+
+    <p><a class="btn btn-primary" href="{{ action('PostController@create') }}">Pievienot jaunu ierakstu</a></p>
 
     <div class="row">
         @foreach ($posts as $post)

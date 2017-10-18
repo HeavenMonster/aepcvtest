@@ -2,7 +2,11 @@
 
 @section("content")
 
-    <h2>Ieraksta {{ $post->id }} labošana</h2>
+    <ol class="breadcrumb">
+        <li><a href="{{ action('PostController@index') }}">Ieraksti</a></li>
+        <li><a href="{{ action('PostController@show', $post) }}">Dienasgrāmatas ieraksts {{ $post->id }}</a></li>
+        <li class="active">Ieraksta labošana</li>
+    </ol>
 
     @include('fragments.validation_errors')
 

@@ -1,9 +1,13 @@
 @extends("layouts.master")
 
 @section("content")
-    <p><a class="btn btn-primary" href="{{ action('PostController@edit', $post) }}">Labot šo ierakstu</a></p>
 
-    <h2>Dienasgrāmatas ieraksts {{ $post->id }}</h2>
+    <ol class="breadcrumb">
+        <li><a href="{{ action('PostController@index') }}">Ieraksti</a></li>
+        <li class="active">Dienasgrāmatas ieraksts {{ $post->id }}</li>
+    </ol>
+
+    <p><a class="btn btn-primary" href="{{ action('PostController@edit', $post) }}">Labot šo ierakstu</a></p>
 
     <h3>{{ $post->title }}</h3>
     <p>{{ $post->text }}</p>

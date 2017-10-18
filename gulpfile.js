@@ -38,6 +38,7 @@ elixir(function(mix) {
         .scripts([
             "jquery/dist/jquery.min.js",
             "angular/angular.min.js",
+            "angular-resource/angular-resource.min.js",
             "angular-loading-bar/build/loading-bar.min.js"
         ],
         "public/js/vendor.js",

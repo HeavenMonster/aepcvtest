@@ -2,7 +2,10 @@
 
 @section("content")
 
-    <h2>Jauna ieraksta izveidošana</h2>
+    <ol class="breadcrumb">
+        <li><a href="{{ action('PostController@index') }}">Ieraksti</a></li>
+        <li class="active">Jauna ieraksta izveidošana</li>
+    </ol>
 
      {{ method_field('PUT') }}
 
