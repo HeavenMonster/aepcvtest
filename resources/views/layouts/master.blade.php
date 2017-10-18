@@ -27,7 +27,7 @@
             <ul class="nav nav-pills pull-right">
                 <li role="presentation"
                     class="{{ Route::currentRouteName() === 'home' ? 'active' : '' }}">
-                    <a href="{{ route('home') }}">Sākums</a>
+                    <a href="{{ route('home') }}">Statistika</a>
                 </li>
                 <li role="presentation"
                     class="{{ Route::currentRouteName() !== 'home' ? 'active' : '' }}">

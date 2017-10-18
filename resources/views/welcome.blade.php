@@ -3,7 +3,7 @@
 @section("content")
 
     <ol class="breadcrumb">
-        <li class="active">Sākums</li>
+        <li class="active">Statistika</li>
     </ol>
 
     <div ng-controller="DashboardController as cntrlr" ng-init="cntrlr.initController()">
